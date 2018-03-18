@@ -15,14 +15,16 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true,
         freezeTableName: true
     });
-    //Promotion.associate = _associate;
+    Promotion.associate = _associate;
     return Promotion;
 };
 
-//TODO Code function _associate
 // INTERNAL FUNCTIONS
-/*
 function _associate(models) {
-
+    models.Promotion.has(models.Product, {
+        as: 'product'
+    });
+    models.Promotion.has(models.Menu, {
+        as: 'menu'
+    });
 }
-*/

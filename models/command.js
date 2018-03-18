@@ -19,14 +19,16 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true,
         freezeTableName: true
     });
-    //Command.associate = _associate;
+    Command.associate = _associate;
     return Command;
 };
 
-//TODO Code function _associate
 // INTERNAL FUNCTIONS
-/*
 function _associate(models) {
-
+    models.Command.hasMany(models.Menu, {
+        as: 'menus'
+    });
+    models.Command.hasMany(models.product, {
+        as: 'products'
+    });
 }
-*/

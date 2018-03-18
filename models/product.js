@@ -32,14 +32,13 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true,
         freezeTableName: true
     });
-    //Product.associate = _associate;
+    Product.associate = _associate;
     return Product;
 };
 
-//TODO Code function _associate
 // INTERNAL FUNCTIONS
-/*
 function _associate(models) {
-
+    models.Product.belongsTo(models.Command);
+    models.Product.belongsTo(models.Menu);
+    models.Product.belongsTo(models.Promotion);
 }
-*/
