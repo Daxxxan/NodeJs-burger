@@ -33,6 +33,6 @@ function _associate(models) {
     models.Menu.hasMany(models.Product, {
         as: 'products'
     });
-    models.Menu.belongsTo(models.command);
-    models.Menu.belongsTo(models.Promotion);
+    models.Menu.belongsTo(models.Command);
+    //models.Menu.belongsTo(models.Promotion);
 }

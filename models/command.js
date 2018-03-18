@@ -28,7 +28,7 @@ function _associate(models) {
     models.Command.hasMany(models.Menu, {
         as: 'menus'
     });
-    models.Command.hasMany(models.product, {
+    models.Command.hasMany(models.Product, {
         as: 'products'
     });
 }

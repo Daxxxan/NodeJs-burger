@@ -40,5 +40,5 @@ module.exports = function(sequelize, DataTypes) {
 function _associate(models) {
     models.Product.belongsTo(models.Command);
     models.Product.belongsTo(models.Menu);
-    models.Product.belongsTo(models.Promotion);
+    //models.Product.belongsTo(models.Promotion);
 }
