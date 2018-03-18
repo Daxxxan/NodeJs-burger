@@ -1,22 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
-    const Menu = sequelize.define('Menu', {
+    const Promotion = sequelize.define('Promotion', {
         id: {
             type: DataTypes.BIGINT,
             primaryKey: true,
             autoIncrement: true,
             unique: true
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
-        },
         price: {
             type: DataTypes.DOUBLE,
-            allowNull: false
-        },
-        size: {
-            type: DataTypes.CHAR,
             allowNull: false
         }
     }, {
@@ -24,8 +15,8 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true,
         freezeTableName: true
     });
-    //Menu.associate = _associate;
-    return Menu;
+    //Promotion.associate = _associate;
+    return Promotion;
 };
 
 //TODO Code function _associate
