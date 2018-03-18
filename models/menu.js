@@ -1,0 +1,38 @@
+module.exports = function(sequelize, DataTypes) {
+    const Menu = sequelize.define('Menu', {
+        id: {
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+            autoIncrement: true,
+            unique: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        },
+        price: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
+        },
+        size: {
+            type: DataTypes.CHAR,
+            allowNull: false
+        }
+    }, {
+        paranoid: true,
+        underscored: true,
+        freezeTableName: true
+    });
+    Menu.associate = _associate;
+    return Menu;
+};
+
+// INTERNAL FUNCTIONS
+function _associate(models) {
+    models.Menu.hasMany(models.Product, {
+        as: 'products'
+    });
+    models.Menu.belongsTo(models.Command);
+    //models.Menu.belongsTo(models.Promotion);
+}
