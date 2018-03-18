@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    const Product = sequelize.define('Product', {
+    const Menu = sequelize.define('Product', {
         id: {
             type: DataTypes.BIGINT,
             primaryKey: true,
@@ -10,14 +10,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
-        },
-        cal: {
-            type: DataTypes.BIGINT,
-            allowNull: false
-        },
-        highlight: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
         },
         price: {
             type: DataTypes.DOUBLE,
@@ -32,8 +24,8 @@ module.exports = function(sequelize, DataTypes) {
         underscored: true,
         freezeTableName: true
     });
-    //Product.associate = _associate;
-    return Product;
+    //Menu.associate = _associate;
+    return Menu;
 };
 
 //TODO Code function _associate
