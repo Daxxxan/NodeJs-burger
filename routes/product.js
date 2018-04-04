@@ -28,4 +28,17 @@ ProductRouter.post('/', function (req, res) {
     });
 });
 
+ProductRouter.get('/:name', function (req, res) {
+    const name = req.params.name;
+
+    ProductController.getProductByName(name)
+    .then((product) => {
+        res.json(product);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+});
+
 module.exports = ProductRouter;

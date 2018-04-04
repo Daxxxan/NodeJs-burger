@@ -12,6 +12,15 @@ ProductController.setProduct = function(name, cal, highlight, price, size) {
     });
 };
 
+ProductController.getProductByName = function (name) {
+    const options = {
+        where: {
+            name: name
+        }
+    };
+    return Product.findAll(options);
+};
+
 ProductController.displayMessage = function () {
     console.log('Page reservée à l\'affichage des produits');
 };
