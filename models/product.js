@@ -8,8 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         cal: {
             type: DataTypes.BIGINT,
