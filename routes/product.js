@@ -41,4 +41,43 @@ ProductRouter.get('/:name', function (req, res) {
     });
 });
 
+ProductRouter.get('/price/:price', function (req, res) {
+   const price = req.params.price;
+
+   ProductController.getProductByPrice(price)
+   .then((product) => {
+        res.json(product);
+   })
+   .catch((err) => {
+        console.log(err);
+        res.status(501).end();
+   });
+});
+
+ProductRouter.get('/cal/:cal', function (req, res) {
+    const cal = req.params.cal;
+
+    ProductController.getProductByCal(cal)
+    .then((product) => {
+        res.json(product);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+});
+
+ProductRouter.get('/size/:size', function (req, res) {
+    const size = req.params.size;
+
+    ProductController.getProductBySize(size)
+    .then((product) => {
+        res.json(product);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+});
+
 module.exports = ProductRouter;
