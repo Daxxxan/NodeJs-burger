@@ -34,5 +34,8 @@ function _associate(models) {
         as: 'products'
     });
     models.Menu.belongsTo(models.Command);
+    models.Menu.belongsToMany(models.Product, {
+        through: 'menu_product'
+    });
     //models.Menu.belongsTo(models.Promotion);
 }
