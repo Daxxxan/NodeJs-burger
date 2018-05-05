@@ -3,13 +3,18 @@ const ModelIndex = require('../models');
 const Menu = ModelIndex.Menu;
 const Product = ModelIndex.Product;
 
-MenuController.setMenu = function (name, price, size) {
+MenuController.setMenu = function (name, price, size, idProducts) {
     return Menu.create({
         name: name,
         price: price,
         size: size
-    });
+    }).then(function(menu) {
+        idProducts.forEach(function (elem) {
+            menu.addProduct(menu.id, elem);
+        });
+    })
 };
+
 
 MenuController.setName = function(oldName, newName){
     return Menu.update({

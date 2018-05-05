@@ -25,10 +25,10 @@ module.exports = function(sequelize, DataTypes) {
 
 // INTERNAL FUNCTIONS
 function _associate(models) {
-    models.Command.hasMany(models.Menu, {
+    /*models.Command.hasMany(models.Menu, {
         as: 'menus'
     });
     models.Command.hasMany(models.Product, {
         as: 'products'
-    });
+    });*/
 }
