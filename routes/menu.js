@@ -11,20 +11,19 @@ MenuRouter.post('/', function (req, res) {
     const price = req.body.price;
     const size = req.body.size;
     const idprod = req.body.idprods;
-    //const prods = req.body.prods;
 
     if(name === undefined || price === undefined || size === undefined || idprod === undefined){
         res.status(400).end();
         return;
     }
     MenuController.setMenu(name, price, size, idprod)
-        .then((successfullyAdd) => {
+    .then((successfullyAdd) => {
         res.status(201).json(successfullyAdd);
-    res.end();
+        res.end();
     })
     .catch((err) => {
         console.log(err);
-    res.status(500).end();
+        res.status(500).end();
     });
 });
 
@@ -32,12 +31,12 @@ MenuRouter.get('/:name', function (req, res) {
     const name = req.params.name;
 
     MenuController.getMenuByName(name)
-        .then((menu) => {
+    .then((menu) => {
         res.json(menu);
     })
     .catch((err) => {
         console.log(err);
-    res.status(501).end();
+        res.status(501).end();
     });
 });
 

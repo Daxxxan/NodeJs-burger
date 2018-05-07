@@ -25,6 +25,10 @@ module.exports = function(sequelize, DataTypes) {
 
 // INTERNAL FUNCTIONS
 function _associate(models) {
+    models.Command.belongsToMany(models.Menu, {
+        through: {model: 'command_menu', unique: false},
+        foreignKey: 'command_id'
+    });
     /*models.Command.hasMany(models.Menu, {
         as: 'menus'
     });

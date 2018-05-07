@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
 function _associate(models) {
     models.Menu.belongsToMany(models.Product, {
         through:{model:'menu_product',unique: false},
-        foreignKey: 'menu_id',
+        foreignKey: 'menu_id'
     });
     //models.Menu.belongsTo(models.Promotion);
 }
