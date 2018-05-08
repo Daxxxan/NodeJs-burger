@@ -34,5 +34,8 @@ function _associate(models) {
         through:{model:'menu_product',unique: false},
         foreignKey: 'menu_id'
     });
-    //models.Menu.belongsTo(models.Promotion);
+    models.Menu.belongsToMany(models.Command, {
+        through:{model:'command_menu',unique: false},
+        foreignKey: 'menu_id'
+    });
 }
