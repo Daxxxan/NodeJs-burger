@@ -46,6 +46,28 @@ MenuController.setSize = function(name, newSize){
     })
 };
 
+MenuController.getAllMenu = function(){
+    const options = {
+        include: [{
+            model: ModelIndex.Product
+        }]
+    }
+    return Menu.findAll(options);
+}
+
+MenuController.getMenu = function(id){
+    const where = {
+        id: id
+    }
+    const options = {
+        include: [{
+            model: ModelIndex.Product
+        }]
+    }
+    options.where = where;
+    return Menu.findAll(options);
+}
+
 MenuController.getMenuByName = function(name){
     const options = {
         where:{

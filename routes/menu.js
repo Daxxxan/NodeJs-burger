@@ -16,6 +16,7 @@ MenuRouter.post('/', function (req, res) {
         res.status(400).end();
         return;
     }
+
     MenuController.setMenu(name, price, size, idprod)
     .then((successfullyAdd) => {
         res.status(201).json(successfullyAdd);
@@ -39,6 +40,28 @@ MenuRouter.get('/:name', function (req, res) {
         res.status(501).end();
     });
 });
+
+MenuRouter.get("/display/allMenu", function(req, res){
+    MenuController.getAllMenu().then((display) => {
+        res.json(display);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+})
+
+MenuRouter.get("/displayMenu/:id", function(req, res){
+    const id = req.params.id;
+
+    MenuController.getMenu(id).then((display) => {
+        res.json(display);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+})
 
 MenuRouter.put('/modifyName/:oldname/:newname', function(req, res){
     const oldname = req.params.oldname;
