@@ -10,7 +10,7 @@ MenuController.setMenu = function (name, price, size, idProducts) {
         size: size
     }).then(function(menu) {
         idProducts.forEach(function (elem) {
-            menu.addProduct(menu.id, elem);
+            menu.addProduct(elem);
         });
     })
 };
@@ -53,7 +53,7 @@ MenuController.getMenuByName = function(name){
         }
     };
     return Menu.findAll(options);
-}
+};
 
 MenuController.getMenuByPrice = function(price){
     const options = {
@@ -62,7 +62,7 @@ MenuController.getMenuByPrice = function(price){
         }
     };
     return Menu.findAll(options);
-}
+};
 
 MenuController.getMenuBySize = function(size){
     const options = {
@@ -93,7 +93,7 @@ MenuController.addProduct = function(menuId, productId){
             return menu.addProduct(product);
         });
     });
-}
+};
 
 
 module.exports = MenuController;

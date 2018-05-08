@@ -4,19 +4,18 @@ const bodyParser = require('body-parser');
 const CommandController = controllers.CommandController;
 
 const CommandRouter = express.Router();
-CommandRouter.use(bodyParser.json);
+CommandRouter.use(bodyParser.json());
 
 CommandRouter.post('/', function (req, res) {
     const status = req.body.status;
     const price = req.body.price;
-    const menuId = req.body.menuId;
+    const idProducts = req.body.idProducts;
 
     if(status === undefined || price === undefined){
         res.status(400).end();
         return;
     }
-
-    CommandController.setCommand(status, price)
+    CommandController.setCommand(status, price, idProducts)
     .then((successfullyAdd) => {
         res.status(201).json(successfullyAdd);
         res.end();
