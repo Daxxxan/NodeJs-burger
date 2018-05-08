@@ -44,10 +44,5 @@ function _associate(models) {
     models.Product.belongsToMany(models.Menu, {
         through:{model:'menu_product',unique: false},
         foreignKey: 'product_id'
-<<<<<<< HEAD
     });
-=======
-    })
-    //models.Product.belongsTo(models.Promotion);
->>>>>>> command
 }
