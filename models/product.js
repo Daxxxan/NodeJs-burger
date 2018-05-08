@@ -9,7 +9,6 @@ module.exports = function(sequelize, DataTypes) {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
         },
         cal: {
             type: DataTypes.BIGINT,
@@ -38,7 +37,12 @@ module.exports = function(sequelize, DataTypes) {
 
 // INTERNAL FUNCTIONS
 function _associate(models) {
-    models.Product.belongsTo(models.Command);
-    models.Product.belongsTo(models.Menu);
-    //models.Product.belongsTo(models.Promotion);
+    models.Product.belongsToMany(models.Command, {
+        through:{model:'command_product',unique: false},
+        foreignKey: 'product_id'
+    });
+    models.Product.belongsToMany(models.Menu, {
+        through:{model:'menu_product',unique: false},
+        foreignKey: 'product_id'
+    });
 }

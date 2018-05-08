@@ -30,9 +30,12 @@ module.exports = function(sequelize, DataTypes) {
 
 // INTERNAL FUNCTIONS
 function _associate(models) {
-    models.Menu.hasMany(models.Product, {
-        as: 'products'
+    models.Menu.belongsToMany(models.Product, {
+        through:{model:'menu_product',unique: false},
+        foreignKey: 'menu_id'
     });
-    models.Menu.belongsTo(models.Command);
-    //models.Menu.belongsTo(models.Promotion);
+    models.Menu.belongsToMany(models.Command, {
+        through:{model:'command_menu',unique: false},
+        foreignKey: 'menu_id'
+    });
 }

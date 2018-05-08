@@ -21,10 +21,10 @@ module.exports = function(sequelize, DataTypes) {
 
 // INTERNAL FUNCTIONS
 function _associate(models) {
-    models.Promotion.hasOne(models.Product, {
+    /*models.Promotion.hasOne(models.Product, {
         as: 'promotion'
     });
     models.Promotion.hasOne(models.Menu, {
         as: 'menu'
-    });
+    });*/
 }
