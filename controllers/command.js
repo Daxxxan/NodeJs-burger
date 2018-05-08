@@ -4,16 +4,13 @@ const Command = ModelIndex.Command;
 const Menu = ModelIndex.Menu;
 const Product = ModelIndex.Product;
 
-CommandController.setCommand = function(status, price, idProducts, idMenus){
+CommandController.setCommand = function(status, price, idProducts){
     return Command.create({
         status: status,
         price: price
     }).then(function (command) {
         idProducts.forEach(function(elem) {
             command.addProduct(elem);
-        });
-        idMenus.forEach(function (elem) {
-            command.addMenu(elem);
         });
     })
 };
