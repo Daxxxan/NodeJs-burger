@@ -3,6 +3,7 @@ const ModelIndex = require('../models');
 const User = ModelIndex.User;
 const bcrypt = require('bcrypt');
 const config = require('../config');
+const jwt = require('jsonwebtoken');
 
 UserController.register = function(name, email, password){
     return User.create({
@@ -22,30 +23,38 @@ UserController.getUser = function(email){
 };
 
 UserController.sign_in = function(email, password){
-    var user = UserController.getUser(email);
-    var passwordIsValid = bcrypt.compareSync(password, user.password);
-    if(passwordIsValid){
-        var token = jwt.sign({ id: user.id },
-            config.secret,
-            {expiresIn: 86400 // expires in 24 hours
-            });
-        return token;
-    }else{
-        return -1;
-    }
+    return UserController.getUser(email).then((usr)=>{
+        let passwordIsValid = bcrypt.compareSync(password, usr.password);
+        if(passwordIsValid){
+            var token = jwt.sign({ id: usr.id, email: usr.email, username: usr.username },
+                config.secret,
+                {expiresIn: 86400 // expires in 24 hours
+                });
+            return token;
+        }else{
+            return -1;
+        }
+    })
+    .catch((err) => {
+            console.log(err);
+            return -1;
+    });
+};
+
+UserController.isLogged = function(req){
+    const token = req.headers['x-access-token'];
+    return jwt.verify(token,config.secret,function(err, decoded){
+        if(err) return false;//res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+
+        return UserController.getUser(decoded.email).then((isLog) => {
+            return true;
+        })
+        .catch((err) => {
+                console.log(err);
+            return false;
+        });
+    });
 };
 
 module.exports = UserController;
 
-/*UserController.isLogged = function(token, user){
-    jwt.verify(token,config.secret,function(err, decoded){
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-
-        UserController.getUser(decoded.id,
-            function (err, user) {
-                if (err) return res.status(500).send("There was a problem finding the user.");
-                if (!user) return res.status(404).send("No user found.");
-
-                res.status(200).send(user);
-    })
-};*/
