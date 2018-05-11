@@ -32,6 +32,40 @@ CommandController.getAllCommand = function () {
     return Command.findAll(options);
 };
 
+CommandController.getCommandByStatus = function(commandStatus) {
+    const options = {
+        include: [{
+            model: ModelIndex.Menu,
+            include: [{
+                model: ModelIndex.Product
+            }]
+        }, {
+            model: ModelIndex.Product
+        }], where: {
+            status: commandStatus
+        }
+    };
+    return Command.findAll(options);
+}
+
+CommandController.getCommandByProductName = function (productName) {
+    const options = {
+        include: [{
+            model: ModelIndex.Menu,
+            include: [{
+                model: ModelIndex.Product
+            }]
+        },{
+            model: ModelIndex.Product,
+            where: {
+              name: productName
+            },
+            require: true
+        }]
+    }
+    return Command.findAll(options);
+}
+
 CommandController.getCommand = function (id) {
     const where = {
         id: id

@@ -108,6 +108,35 @@ ProductRouter.put('/modifyPrice/:name/:price', function (req, res) {
     })
 });
 
+ProductRouter.put('/modifyHighlight/:id', function (req, res) {
+    const id = req.params.id;
+
+    if(id === undefined){
+        res.status(400).end();
+        return;
+    }
+
+    ProductController.setProductHighLight(id)
+    .then((successFullyAdd) => {
+        res.status(201).json(successFullyAdd);
+        res.end();
+    })
+    .catch ((err) => {
+        console.log(err);
+        res.status(500).end();
+    })
+});
+
+ProductRouter.get("/display/allProducts", function(req, res){
+    ProductController.getAllProduct().then((product) => {
+        res.json(product);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+});
+
 ProductRouter.get('/:name', function (req, res) {
     const name = req.params.name;
 

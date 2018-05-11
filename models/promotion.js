@@ -9,6 +9,14 @@ module.exports = function(sequelize, DataTypes) {
         price: {
             type: DataTypes.DOUBLE,
             allowNull: false
+        },
+        startDate: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        endDate: {
+            type: DataTypes.DATE,
+            allowNull: false
         }
     }, {
         paranoid: true,
@@ -19,12 +27,9 @@ module.exports = function(sequelize, DataTypes) {
     return Promotion;
 };
 
-// INTERNAL FUNCTIONS
 function _associate(models) {
-    /*models.Promotion.hasOne(models.Product, {
-        as: 'promotion'
+    models.Promotion.belongsTo(models.Product, {
     });
-    models.Promotion.hasOne(models.Menu, {
-        as: 'menu'
-    });*/
+    models.Promotion.belongsTo(models.Menu, {
+    });
 }

@@ -63,6 +63,30 @@ MenuRouter.get("/displayMenu/:id", function(req, res){
     });
 })
 
+MenuRouter.get("/displayMenuByPrice/:price", function(req, res){
+    const price = req.params.price;
+
+    MenuController.getMenuByPrice(price).then((display) => {
+        res.json(display);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+})
+
+MenuRouter.get("/displayMenuBySize/:size", function(req, res){
+    const size = req.params.size;
+
+    MenuController.getMenuBySize(size).then((display) => {
+        res.json(display);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+})
+
 MenuRouter.put('/modifyName/:oldname/:newname', function(req, res){
     const oldname = req.params.oldname;
     const newname = req.params.newname;
@@ -100,5 +124,24 @@ MenuRouter.put('/modifyPrice/:name/:newprice', function(req, res){
         res.status(500).end();
     });
 });
+
+MenuRouter.put('/modifySize/:id/:size', function(req, res){
+    const id = req.params.id;
+    const size = req.params.size;
+
+    if(size === undefined || id === undefined){
+        res.status(400).end();
+        return;
+    }
+
+    MenuController.setSize(id, size).then((successFullyAdd) => {
+        res.status(201).json(successFullyAdd);
+        res.end();
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).end();
+    });
+})
 
 module.exports = MenuRouter;

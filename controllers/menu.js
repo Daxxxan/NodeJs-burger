@@ -2,6 +2,7 @@ const MenuController = function () {};
 const ModelIndex = require('../models');
 const Menu = ModelIndex.Menu;
 const Product = ModelIndex.Product;
+const Promotion = ModelIndex.Promotion;
 
 MenuController.setMenu = function (name, price, size, idProducts) {
     return Menu.create({
@@ -36,12 +37,12 @@ MenuController.setPrice = function(name, newPrice){
     })
 };
 
-MenuController.setSize = function(name, newSize){
+MenuController.setSize = function(id, newSize){
     return Menu.update({
         size: newSize
     },{
         where: {
-            name: name
+            id: id
         }
     })
 };
@@ -50,6 +51,9 @@ MenuController.getAllMenu = function(){
     const options = {
         include: [{
             model: ModelIndex.Product
+        }, {
+            model: ModelIndex.Promotion,
+            as: "MenusPromotions"
         }]
     }
     return Menu.findAll(options);
@@ -62,6 +66,9 @@ MenuController.getMenu = function(id){
     const options = {
         include: [{
             model: ModelIndex.Product
+        }, {
+            model: ModelIndex.Promotion,
+            as: "MenusPromotions"
         }]
     }
     options.where = where;
@@ -70,6 +77,12 @@ MenuController.getMenu = function(id){
 
 MenuController.getMenuByName = function(name){
     const options = {
+        include: [{
+            model: ModelIndex.Product
+        }, {
+            model: ModelIndex.Promotion,
+            as: "MenusPromotions"
+        }],
         where:{
             name : name
         }
@@ -79,6 +92,12 @@ MenuController.getMenuByName = function(name){
 
 MenuController.getMenuByPrice = function(price){
     const options = {
+        include: [{
+            model: ModelIndex.Product
+        }, {
+            model: ModelIndex.Promotion,
+            as: "MenusPromotions"
+        }],
         where:{
             price : price
         }
@@ -88,6 +107,12 @@ MenuController.getMenuByPrice = function(price){
 
 MenuController.getMenuBySize = function(size){
     const options = {
+        include: [{
+            model: ModelIndex.Product
+        }, {
+            model: ModelIndex.Promotion,
+            as: "MenusPromotions"
+        }],
         where:{
             size : size
         }

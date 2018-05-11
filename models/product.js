@@ -45,4 +45,8 @@ function _associate(models) {
         through:{model:'menu_product',unique: false},
         foreignKey: 'product_id'
     });
+    models.Product.hasMany(models.Promotion, {
+        as: "ProductsPromotions",
+        foreignKey: "product_id"
+    });
 }

@@ -87,4 +87,28 @@ CommandRouter.get('/displayCommand/:id', function (req, res) {
     });
 });
 
+CommandRouter.get('/displayCommandByStatus/:status', function(req, res){
+    status = req.params.status;
+
+    CommandController.getCommandByStatus(status).then((display) => {
+        res.json(display);
+        res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    });
+});
+
+CommandRouter.get("/displayCommandByProductName/:productName", function(req, res) {
+    const productName = req.params.productName;
+
+    CommandController.getCommandByProductName(productName).then((display) => {
+      res.json(display);
+      res.end();
+    }).catch((err) => {
+        console.log(err);
+        res.status(501).end();
+    })
+})
+
 module.exports = CommandRouter;

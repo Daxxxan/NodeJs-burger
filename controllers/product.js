@@ -52,8 +52,32 @@ ProductController.setProductSize = function(id, size){
     })
 };
 
+ProductController.setProductHighLight = function(id){
+  return Product.update({
+      highlight: 1
+  }, {
+      where: {
+          id: id
+      }
+  })
+}
+
+ProductController.getAllProduct = function(){
+    const options = {
+        include: [{
+            model: ModelIndex.Promotion,
+            as: "ProductsPromotions"
+        }]
+    }
+    return Product.findAll(options);
+}
+
 ProductController.getProductByName = function (name) {
     const options = {
+        include: [{
+            model: ModelIndex.Promotion,
+            as: "ProductsPromotions"
+        }],
         where: {
             name: name
         }
@@ -63,6 +87,10 @@ ProductController.getProductByName = function (name) {
 
 ProductController.getProductByPrice = function (price) {
     const options = {
+        include: [{
+            model: ModelIndex.Promotion,
+            as: "ProductsPromotions"
+        }],
         where: {
             price: price
         }
@@ -72,6 +100,10 @@ ProductController.getProductByPrice = function (price) {
 
 ProductController.getProductByCal = function (cal) {
     const options = {
+        include: [{
+            model: ModelIndex.Promotion,
+            as: "ProductsPromotions"
+        }],
         where: {
             cal: cal
         }
@@ -81,6 +113,10 @@ ProductController.getProductByCal = function (cal) {
 
 ProductController.getProductBySize = function (size) {
     const options = {
+        include: [{
+            model: ModelIndex.Promotion,
+            as: "ProductsPromotions"
+        }],
         where: {
             size: size
         }
@@ -90,6 +126,10 @@ ProductController.getProductBySize = function (size) {
 
 ProductController.getProductByHighlight = function (){
     const options = {
+        include: [{
+            model: ModelIndex.Promotion,
+            as: "ProductsPromotions"
+        }],
         where : {
             highlight: 1
         }

@@ -38,4 +38,8 @@ function _associate(models) {
         through:{model:'command_menu',unique: false},
         foreignKey: 'menu_id'
     });
+    models.Menu.hasMany(models.Promotion, {
+        as: "MenusPromotions",
+        foreignKey: "menu_id"
+    });
 }
