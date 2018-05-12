@@ -101,7 +101,6 @@ PromotionRouter.get('/displayPromotionByStartDate/:startDate', function(req, res
 
 PromotionRouter.get('/displayPromotionByEndDate/:endDate', function(req, res) {
     var date = req.params.endDate;
-    date = new Date(date);
 
     PromotionController.getPromotionByEndDate(date)
     .then((Promotion) => {

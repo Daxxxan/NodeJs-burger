@@ -15,6 +15,7 @@ ModelIndex.getModel = function (modelName) {
 const sequelize = new Sequelize('nodejs-burger', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
+    timezone: '+02:00',
     operatorsAliases: Op
 });
 
