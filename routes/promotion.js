@@ -34,7 +34,29 @@ PromotionRouter.put('/addProductPromotion', function(req, res) {
 
 });
 
-PromotionRouter.post('/addMenuPromotion', function(req, res) {
+PromotionRouter.delete("/delete/:id",function(req, res){
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
+        if(id === null){
+            res.status(400).end();
+            return;
+        }
+
+        PromotionController.deletePromotion(id).then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+            res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        });
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+});
+
+PromotionRouter.put('/addMenuPromotion', function(req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const price = req.body.price;

@@ -162,6 +162,54 @@ ProductRouter.put('/modifyHighlight/:id', function (req, res) {
     }
 });
 
+ProductRouter.put('/resetHighlight/:id', function (req, res) {
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
+
+        if(id === undefined){
+            res.status(400).end();
+            return;
+        }
+
+        ProductController.resetProductHighLight(id)
+            .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+        res.end();
+        })
+        .catch ((err) => {
+                console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+});
+
+ProductRouter.delete('/delete/:id', function (req, res) {
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
+
+        if(id === undefined){
+            res.status(400).end();
+            return;
+        }
+
+        ProductController.deleteProduct(id)
+        .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+            res.end();
+        })
+        .catch ((err) => {
+            console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+});
+
 ProductRouter.get("/display/allProducts", function(req, res){
     ProductController.getAllProduct().then((product) => {
         res.json(product);
@@ -224,7 +272,7 @@ ProductRouter.get('/size/:size', function (req, res) {
     });
 });
 
-ProductRouter.get('/highlight', function(req, res){
+ProductRouter.get('/display/highlight', function(req, res){
    ProductController.getProductByHighlight()
    .then((product) => {
        res.json(product)

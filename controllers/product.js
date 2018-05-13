@@ -60,6 +60,24 @@ ProductController.setProductHighLight = function(id){
           id: id
       }
   })
+};
+
+ProductController.resetProductHighLight = function(id){
+  return Product.update({
+      highlight: 0
+  }, {
+      where: {
+          id: id
+      }
+  })
+};
+
+ProductController.deleteProduct = function (id){
+    return Product.destroy({
+        where: {
+            id: id
+        }
+    })
 }
 
 ProductController.getAllProduct = function(){

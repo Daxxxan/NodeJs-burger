@@ -93,4 +93,12 @@ PromotionController.setPromotionPrice = function(id, price){
     })
 };
 
+PromotionController.deletePromotion = function(id){
+    return Promotion.destroy({
+        where: {
+            id: id
+        }
+    })
+};
+
 module.exports = PromotionController;
