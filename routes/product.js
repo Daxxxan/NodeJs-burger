@@ -2,129 +2,164 @@ const express = require('express');
 const controllers = require('../controllers');
 const bodyParser = require('body-parser');
 const ProductController = controllers.ProductController;
+const UserController = controllers.UserController;
 
 const ProductRouter = express.Router();
 ProductRouter.use(bodyParser.json());
 
 ProductRouter.post('/', function (req, res) {
-    const name = req.body.name;
-    const cal = req.body.cal;
-    const highlight = req.body.highlight;
-    const price = req.body.price;
-    const size = req.body.size;
+    const log = UserController.isLogged(req);
+    if(log){
+        const name = req.body.name;
+        const cal = req.body.cal;
+        const highlight = req.body.highlight;
+        const price = req.body.price;
+        const size = req.body.size;
 
-    if(name === undefined || cal === undefined || highlight === undefined || price === undefined || size === undefined){
-        res.status(400).end();
-        return;
-    }
-    ProductController.setProduct(name, cal, highlight, price, size)
-    .then((successfullyAdd) => {
-        res.status(201).json(successfullyAdd);
+        if(name === undefined || cal === undefined || highlight === undefined || price === undefined || size === undefined){
+            res.status(400).end();
+            return;
+        }
+        ProductController.setProduct(name, cal, highlight, price, size)
+            .then((successfullyAdd) => {
+            res.status(201).json(successfullyAdd);
         res.end();
-    })
-    .catch((err) => {
-        console.log(err);
-        res.status(500).end();
-    });
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        });
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+
 });
 
 ProductRouter.put('/modifyName/:oldName/:newName', function (req, res){
-    const oldName = req.params.oldName;
-    const newName = req.params.newName;
+    const log = UserController.isLogged(req);
+    if(log){
+        const oldName = req.params.oldName;
+        const newName = req.params.newName;
 
-    if(oldName === undefined || newName === undefined){
-        res.status(400).end();
-        return;
+        if(oldName === undefined || newName === undefined){
+            res.status(400).end();
+            return;
+        }
+
+        ProductController.setProductName(oldName, newName)
+            .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+        res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
     }
 
-    ProductController.setProductName(oldName, newName)
-    .then((successFullyAdd) => {
-        res.status(201).json(successFullyAdd);
-        res.end();
-    })
-    .catch((err) => {
-        console.log(err);
-        res.status(500).end();
-    })
 });
 
 ProductRouter.put('/modifyCal/:name/:cal', function (req, res){
-    const name = req.params.name;
-    const cal = req.params.cal;
+    const log = UserController.isLogged(req);
+    if(log){
+        const name = req.params.name;
+        const cal = req.params.cal;
 
-    if(name === undefined || cal === undefined){
-        res.status(400).end();
-        return;
+        if(name === undefined || cal === undefined){
+            res.status(400).end();
+            return;
+        }
+
+        ProductController.setProductCal(name, cal)
+            .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+        res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
     }
 
-    ProductController.setProductCal(name, cal)
-    .then((successFullyAdd) => {
-        res.status(201).json(successFullyAdd);
-        res.end();
-    })
-    .catch((err) => {
-            console.log(err);
-        res.status(500).end();
-    })
 });
 
 ProductRouter.put('/modifySize/:id/:size', function (req, res){
-    const id = req.params.id;
-    const size = req.params.size;
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
+        const size = req.params.size;
 
-    if(id === undefined || size === undefined){
-        res.status(400).end();
-        return;
-    }
+        if(id === undefined || size === undefined){
+            res.status(400).end();
+            return;
+        }
 
-    ProductController.setProductSize(id, size)
-    .then((successFullyAdd) => {
-        res.status(201).json(successFullyAdd);
+        ProductController.setProductSize(id, size)
+            .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
         res.end();
-    })
-    .catch((err) => {
-            console.log(err);
-        res.status(500).end();
-    })
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
 });
 
 ProductRouter.put('/modifyPrice/:name/:price', function (req, res) {
-    const name = req.params.name;
-    const price = req.params.price;
+    const log = UserController.isLogged(req);
+    if(log){
+        const name = req.params.name;
+        const price = req.params.price;
 
-    if(name === undefined || price === undefined){
-        res.status(400).end();
-        return;
+        if(name === undefined || price === undefined){
+            res.status(400).end();
+            return;
+        }
+
+        ProductController.setProductPrice(name, price)
+            .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+        res.end();
+        })
+        .catch ((err) => {
+                console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
     }
 
-    ProductController.setProductPrice(name, price)
-    .then((successFullyAdd) => {
-        res.status(201).json(successFullyAdd);
-        res.end();
-    })
-    .catch ((err) => {
-        console.log(err);
-        res.status(500).end();
-    })
 });
 
 ProductRouter.put('/modifyHighlight/:id', function (req, res) {
-    const id = req.params.id;
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
 
-    if(id === undefined){
-        res.status(400).end();
-        return;
-    }
+        if(id === undefined){
+            res.status(400).end();
+            return;
+        }
 
-    ProductController.setProductHighLight(id)
-    .then((successFullyAdd) => {
-        res.status(201).json(successFullyAdd);
+        ProductController.setProductHighLight(id)
+            .then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
         res.end();
-    })
-    .catch ((err) => {
-        console.log(err);
-        res.status(500).end();
-    })
+        })
+        .catch ((err) => {
+                console.log(err);
+            res.status(500).end();
+        })
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
 });
 
 ProductRouter.get("/display/allProducts", function(req, res){
@@ -189,7 +224,7 @@ ProductRouter.get('/size/:size', function (req, res) {
     });
 });
 
-ProductRouter.post('/highlight', function(req, res){
+ProductRouter.get('/highlight', function(req, res){
    ProductController.getProductByHighlight()
    .then((product) => {
        res.json(product)

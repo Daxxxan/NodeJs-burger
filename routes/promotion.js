@@ -2,50 +2,63 @@ const express = require('express');
 const controllers = require('../controllers');
 const bodyParser = require('body-parser');
 const PromotionController = controllers.PromotionController;
+const UserController = controllers.UserController;
 
 const PromotionRouter = express.Router();
 PromotionRouter.use(bodyParser.json());
 
 PromotionRouter.post('/addProductPromotion', function(req, res) {
-      const price = req.body.price;
-      const startDate = req.body.startDate;
-      const endDate = req.body.endDate;
-      const productId = req.body.productId;
+    const log = UserController.isLogged(req);
+    if(log){
+        const price = req.body.price;
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const productId = req.body.productId;
 
-      if(price === undefined || startDate === undefined || endDate === undefined || productId === undefined){
-          res.status(400).end();
-          return;
-      }
-      PromotionController.setProductPromotion(price, startDate, endDate, productId)
-      .then((successfullyAdd) => {
-          res.status(201).json(successfullyAdd);
-          res.end();
-      })
-      .catch((err) => {
-          console.log(err);
-          res.status(500).end();
-      });
+        if(price === undefined || startDate === undefined || endDate === undefined || productId === undefined){
+            res.status(400).end();
+            return;
+        }
+        PromotionController.setProductPromotion(price, startDate, endDate, productId)
+            .then((successfullyAdd) => {
+            res.status(201).json(successfullyAdd);
+        res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        });
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+
 });
 
 PromotionRouter.post('/addMenuPromotion', function(req, res) {
-      const price = req.body.price;
-      const startDate = req.body.startDate;
-      const endDate = req.body.endDate;
-      const menuId = req.body.menuId;
+    const log = UserController.isLogged(req);
+    if(log){
+        const price = req.body.price;
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const menuId = req.body.menuId;
 
-      if(price === undefined || startDate === undefined || endDate === undefined || menuId === undefined){
-          res.status(400).end();
-          return;
-      }
-      PromotionController.setMenuPromotion(price, startDate, endDate, menuId)
-      .then((successfullyAdd) => {
-          res.status(201).json(successfullyAdd);
-          res.end();
-      })
-      .catch((err) => {
-          console.log(err);
-          res.status(500).end();
-      });
+        if(price === undefined || startDate === undefined || endDate === undefined || menuId === undefined){
+            res.status(400).end();
+            return;
+        }
+        PromotionController.setMenuPromotion(price, startDate, endDate, menuId)
+            .then((successfullyAdd) => {
+            res.status(201).json(successfullyAdd);
+        res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        });
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+
 });
 
 PromotionRouter.get('/displayAll', function(req, res){
