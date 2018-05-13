@@ -104,4 +104,12 @@ CommandController.setPrice = function (id, price) {
     })
 };
 
+CommandController.deleteCommand = function(id){
+    return Command.destroy({
+        where: {
+            id: id
+        }
+    });
+};
+
 module.exports = CommandController;
