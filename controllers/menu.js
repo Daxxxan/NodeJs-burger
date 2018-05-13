@@ -120,6 +120,14 @@ MenuController.getMenuBySize = function(size){
     return Menu.findAll(options);
 };
 
+MenuController.deleteMenu = function(id){
+    return Menu.destroy({
+        where: {
+            id: id
+        }
+    });
+};
+
 MenuController.displayMessage = function () {
     console.log('Page reservée à l\'affichage des menus');
 };

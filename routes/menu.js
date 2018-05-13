@@ -167,6 +167,28 @@ MenuRouter.put('/modifySize/:id/:size', function(req, res){
         res.status(400).send({ auth: false, message: 'Can not read token' }).end();
     }
 
-})
+});
+
+MenuRouter.delete("/delete/:id",function(req, res){
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
+        if(id === null){
+            res.status(400).end();
+            return;
+        }
+
+        MenuController.deleteMenu(id).then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+            res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        });
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
+});
 
 module.exports = MenuRouter;
