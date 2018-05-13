@@ -54,15 +54,5 @@ UserRouter.get('/logout', function(req, res) {
     res.status(200).send({ auth: false, token: null });
 });
 
-UserRouter.post('/test', function(req, res) {
-    const log = UserController.isLogged(req);
-    if(log){
-        res.status(200).send("CA MARCHE").end()
-    }else{
-        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
-    }
-
-})
-
 
 module.exports = UserRouter;
