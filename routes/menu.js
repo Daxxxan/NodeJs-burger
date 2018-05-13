@@ -40,7 +40,7 @@ MenuRouter.get('/:name', function (req, res) {
 
     MenuController.getMenuByName(name)
     .then((menu) => {
-        res.json(menu);
+        res.status(201).json(menu);
     })
     .catch((err) => {
         console.log(err);
@@ -50,7 +50,7 @@ MenuRouter.get('/:name', function (req, res) {
 
 MenuRouter.get("/display/allMenu", function(req, res){
     MenuController.getAllMenu().then((display) => {
-        res.json(display);
+        res.status(201).json(display);
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -62,7 +62,7 @@ MenuRouter.get("/displayMenu/:id", function(req, res){
     const id = req.params.id;
 
     MenuController.getMenu(id).then((display) => {
-        res.json(display);
+        res.status(201).json(display);
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -74,7 +74,7 @@ MenuRouter.get("/displayMenuByPrice/:price", function(req, res){
     const price = req.params.price;
 
     MenuController.getMenuByPrice(price).then((display) => {
-        res.json(display);
+        res.status(201).json(display);
         res.end();
     }).catch((err) => {
         console.log(err);
@@ -86,7 +86,7 @@ MenuRouter.get("/displayMenuBySize/:size", function(req, res){
     const size = req.params.size;
 
     MenuController.getMenuBySize(size).then((display) => {
-        res.json(display);
+        res.status(201).json(display);
         res.end();
     }).catch((err) => {
         console.log(err);
