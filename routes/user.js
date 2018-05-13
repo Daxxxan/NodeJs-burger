@@ -6,7 +6,7 @@ const UserController = controllers.UserController;
 const UserRouter = express.Router();
 UserRouter.use(bodyParser.json());
 
-UserRouter.post('/',function(req, res){
+UserRouter.put('/',function(req, res){
     const name= req.body.username;
     const email= req.body.email;
     const password= req.body.password;

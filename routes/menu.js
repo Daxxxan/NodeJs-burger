@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const MenuRouter = express.Router();
 MenuRouter.use(bodyParser.json());
 
-MenuRouter.post('/', function (req, res) {
+MenuRouter.put('/', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const name = req.body.name;

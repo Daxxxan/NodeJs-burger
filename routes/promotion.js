@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const PromotionRouter = express.Router();
 PromotionRouter.use(bodyParser.json());
 
-PromotionRouter.post('/addProductPromotion', function(req, res) {
+PromotionRouter.put('/addProductPromotion', function(req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const price = req.body.price;

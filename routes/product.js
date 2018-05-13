@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const ProductRouter = express.Router();
 ProductRouter.use(bodyParser.json());
 
-ProductRouter.post('/', function (req, res) {
+ProductRouter.put('/', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const name = req.body.name;

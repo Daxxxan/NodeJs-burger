@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const CommandRouter = express.Router();
 CommandRouter.use(bodyParser.json());
 
-CommandRouter.post('/', function (req, res) {
+CommandRouter.put('/', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const status = req.body.status;
