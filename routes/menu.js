@@ -44,7 +44,7 @@ MenuRouter.get('/:name', function (req, res) {
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
@@ -54,7 +54,7 @@ MenuRouter.get("/display/allMenu", function(req, res){
         res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 })
 
@@ -66,7 +66,7 @@ MenuRouter.get("/displayMenu/:id", function(req, res){
         res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 })
 
@@ -78,7 +78,7 @@ MenuRouter.get("/displayMenuByPrice/:price", function(req, res){
         res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 })
 
@@ -90,7 +90,7 @@ MenuRouter.get("/displayMenuBySize/:size", function(req, res){
         res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 })
 
