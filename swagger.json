@@ -1,0 +1,249 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API permettant la gestion et la réservation de produits sous différentes formes, via des menus, des commandes. La mise en avant des produits ainsi que des promotions sont possible via celle-ci.",
+    "version": "1.0.0",
+    "title": "Burger API - Groupe 2",
+    "license": {
+      "name": "NodeJS",
+      "url": "https://github.com/nodejs/node/blob/master/LICENSE"
+    }
+  },
+  "host": "vincentguenin.ddns.net:8000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "product",
+      "description": "Manipuler les produits"
+    },
+    {
+      "name": "menu",
+      "description": "Manipuler les menus"
+    },
+    {
+      "name": "command",
+      "description": "Tout concernant les commandes"
+    },
+    {
+      "name": "promotion",
+      "description": "Mettez vos produits et menus en avant"
+    },
+    {
+      "name": "user",
+      "description": "Gérer vos utilisateurs"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/product": {
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Ajouter un nouveau produit",
+        "description": "",
+        "operationId": "addProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès de l'utilisateur",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Produit à ajouter en base",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/modifyName/{oldName}/{newName}": {
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Modifier le nom d'un produit",
+        "description": "",
+        "operationId": "ModifyProductName",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Produit à ajouter en base",
+            "required": true,
+            "schema": {
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJlbWFpbEBnbWFpbC5jb20iLCJ1c2VybmFtZSI6IlVzZXIxIiwiaWF0IjoxNTI2MjI0Nzg2LCJleHAiOjE1MjYzMTExODZ9.K9YlKCAYfVLtESwV0sTYEo6Ckrs0a8D8uznnJyorbhE"
+            }
+          },
+          {
+            "in": "path",
+            "name": "oldName",
+            "type": "string",
+            "description": "Ancien nom du produit",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "newName",
+            "type": "string",
+            "description": "Nouveau nom du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "cal": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Nombre de calories du produit"
+        },
+        "highlight": {
+          "type": "boolean",
+          "default": false
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "size": {
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "Menu": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "size": {
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "Command": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "Promotion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
