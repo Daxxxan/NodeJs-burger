@@ -1,0 +1,1961 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API permettant la gestion et la réservation de produits sous différentes formes, via des menus, des commandes. La mise en avant des produits ainsi que des promotions sont possible via celle-ci.",
+    "version": "1.0.0",
+    "title": "Burger API - Groupe 2",
+    "license": {
+      "name": "NodeJS",
+      "url": "https://github.com/nodejs/node/blob/master/LICENSE"
+    }
+  },
+  "host": "vincentguenin.ddns.net:8000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "product",
+      "description": "Manipuler les produits"
+    },
+    {
+      "name": "menu",
+      "description": "Manipuler les menus"
+    },
+    {
+      "name": "command",
+      "description": "Tout concernant les commandes"
+    },
+    {
+      "name": "promotion",
+      "description": "Mettez vos produits et menus en avant"
+    },
+    {
+      "name": "user",
+      "description": "Gérer vos utilisateurs"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/product": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Ajouter un nouveau produit",
+        "description": "",
+        "operationId": "addProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès de l'utilisateur",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Produit à ajouter en base",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/modifyName/{oldName}/{newName}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Modifier le nom d'un produit",
+        "description": "",
+        "operationId": "ModifyProductName",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "oldName",
+            "type": "string",
+            "description": "Ancien nom du produit",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "newName",
+            "type": "string",
+            "description": "Nouveau nom du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/modifyCal/{name}/{cal}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Modifier le nombre de calories d'un produit",
+        "description": "",
+        "operationId": "ModifyProductCal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "type": "string",
+            "description": "Nom du produit",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "cal",
+            "type": "string",
+            "description": "Nombre de calories d'un produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/modifySize/{name}/{size}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Modifier la taille d'un produit",
+        "description": "",
+        "operationId": "ModifyProductSize",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "type": "string",
+            "description": "Nom du produit",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "size",
+            "type": "string",
+            "description": "Taille d'un produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/modifyPrice/{name}/{price}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Modifier le prix d'un produit",
+        "description": "",
+        "operationId": "ModifyProductPrice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "type": "string",
+            "description": "Nom du produit",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "price",
+            "type": "string",
+            "description": "Prix d'un produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/modifyHighlight/{id}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Mettre en avant un produit",
+        "description": "",
+        "operationId": "ModifyProductHighlight",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "id du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/resetHighlight/{id}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Retirer la mise en avant d'un produit",
+        "description": "",
+        "operationId": "resetProductHighlight",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "id du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/display/allProducts": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Affiche tous les produits",
+        "description": "",
+        "operationId": "deleteProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/displayByName/{name}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Afficher un produit via son nom",
+        "description": "",
+        "operationId": "displayProductByName",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "type": "string",
+            "description": "Nom du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/descriptions/Product"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/displayByPrice/{price}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Afficher tous les produits correspondant à un prix",
+        "description": "",
+        "operationId": "displayProductsByPrice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "price",
+            "type": "string",
+            "description": "Prix du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/descriptions/Product"
+              }
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/displayBySize/{size}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Afficher tous les produits correspondant à une taille",
+        "description": "",
+        "operationId": "displayProductsBySize",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "size",
+            "type": "string",
+            "description": "Taille du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/descriptions/Product"
+              }
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/displayHighlight": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Afficher tous les produits mis en avant",
+        "description": "",
+        "operationId": "displayHighlightedProducts",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/descriptions/Product"
+              }
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/product/delete/{id}": {
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Supprimer un produit",
+        "description": "",
+        "operationId": "deleteProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'accès",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "id du produit",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command": {
+      "post": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Créé une commande",
+        "description": "",
+        "operationId": "createCommand",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Commande à ajouter en base",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Command"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/CommandDisplay"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/modifyStatus/{id}/{status}": {
+      "patch": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Modifie le status d'une commande",
+        "description": "",
+        "operationId": "setCommandStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id de la commande à modifier",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "status",
+            "description": "Nouveau status de la commande",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/modifyPrice/{id}/{price}": {
+      "patch": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Modifie le prix de la commande",
+        "description": "",
+        "operationId": "setCommandPrice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id de la commande à modifier",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "price",
+            "description": "Nouveau prix de la commande",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/displayAll": {
+      "get": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Affiche toutes les commandes",
+        "description": "",
+        "operationId": "getAllCommand",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CommandDisplay"
+              }
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/displayCommand/{id}": {
+      "get": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Affiche la commande avec l'id indiqué",
+        "description": "",
+        "operationId": "getCommandByPrice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id de la commande à afficher",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/CommandDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/displayCommandByStatus/{status}": {
+      "get": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Affiche les commandes avec le status indiqué",
+        "description": "",
+        "operationId": "getCommandByStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "status",
+            "description": "Status des commandes à afficher",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": null,
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CommandDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/displayCommandByProductName/{productName}": {
+      "get": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Affiche les commandes avec le produit indiqué",
+        "description": "",
+        "operationId": "getCommandByProduct",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productName",
+            "description": "Nom du produit a recherché dans les commandes",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": null,
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CommandDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/command/delete/{id}": {
+      "delete": {
+        "tags": [
+          "command"
+        ],
+        "summary": "Supprime un menu",
+        "description": "",
+        "operationId": "deleteMenu",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id du menu à supprimer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/promotion/addProductPromotion": {
+      "post": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Ajouter une nouvelle promotion",
+        "description": "",
+        "operationId": "addProductPromotion",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Promotion à ajouter en base ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Promotion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/promotion/addMenuPromotion": {
+      "post": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Ajouter une nouvelle promotion",
+        "description": "",
+        "operationId": "addMenuPromotion",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Promotion à ajouter en base ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Promotion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/promotion/displayAll": {
+      "get": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Afficher toutes les promotions",
+        "description": "",
+        "operationId": "displayAll",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Requête traitée avec succès.",
+            "schema": {
+              "$ref": "#/definitions/PromotionDisplay"
+            }
+          },
+          "501": {
+            "description": "Fonctionnalité réclamée non supportée par le serveur."
+          }
+        }
+      }
+    },
+    "/promotion/displayPromotionByProduct/{id}": {
+      "get": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Afficher toutes les promotions par produit",
+        "description": "",
+        "operationId": "displayAllPromotionByProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id du produit pour afficher la promotion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requête traitée avec succès.",
+            "schema": {
+              "$ref": "#/definitions/PromotionDisplay"
+            }
+          },
+          "501": {
+            "description": "Fonctionnalité réclamée non supportée par le serveur."
+          }
+        }
+      }
+    },
+    "/promotion/displayPromotionByMenu/{id}": {
+      "get": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Afficher toutes les promotions par menu",
+        "description": "",
+        "operationId": "displayAllPromotionByMenu",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id du menu pour afficher la promotion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requête traitée avec succès.",
+            "schema": {
+              "$ref": "#/definitions/PromotionDisplay"
+            }
+          },
+          "501": {
+            "description": "Fonctionnalité réclamée non supportée par le serveur."
+          }
+        }
+      }
+    },
+    "/promotion/displayPromotionByStartDate/{startDate}": {
+      "get": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Afficher toutes les promotions par date de début",
+        "description": "",
+        "operationId": "displayAllPromotionByStartDate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "startDate",
+            "description": "date de début de la promotion pour afficher la promotion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requête traitée avec succès.",
+            "schema": {
+              "$ref": "#/definitions/PromotionDisplay"
+            }
+          },
+          "501": {
+            "description": "Fonctionnalité réclamée non supportée par le serveur."
+          }
+        }
+      }
+    },
+    "/promotion/displayPromotionByEndDate/{endDate}": {
+      "get": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Afficher toutes les promotions par date de fin",
+        "description": "",
+        "operationId": "displayAllPromotionByEndDate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "endDate",
+            "description": "date de fin de la promotion pour afficher la promotion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requête traitée avec succès.",
+            "schema": {
+              "$ref": "#/definitions/PromotionDisplay"
+            }
+          },
+          "501": {
+            "description": "Fonctionnalité réclamée non supportée par le serveur."
+          }
+        }
+      }
+    },
+    "/promotion/modifyPromotionPrice/{id}/{price}": {
+      "patch": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Modifier le prix d'une promotion",
+        "description": "",
+        "operationId": "modifyPromotionPrice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "description": "Id de la promotion",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "price",
+            "type": "number",
+            "format": "double",
+            "description": "Nouveau prix de la promotion",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Requête traitée avec succès."
+          },
+          "501": {
+            "description": "Fonctionnalité réclamée non supportée par le serveur."
+          }
+        }
+      }
+    },
+    "/promotion/delete/{id}": {
+      "delete": {
+        "tags": [
+          "promotion"
+        ],
+        "summary": "Supprime une promotion",
+        "description": "",
+        "operationId": "delete",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id de la promotion à supprimer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Requête traitée avec succès."
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur interne du serveur."
+          }
+        }
+      }
+    },
+    "/menu": {
+      "post": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Ajouter un nouveau Menu",
+        "description": "",
+        "operationId": "addMenu",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Menu à ajouter en base",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Menu"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/MenuDisplay"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/{name}": {
+      "get": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Affiche le menu ayant le nom recherché",
+        "description": "",
+        "operationId": "getMenuByName",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "description": "Nom du menu à afficher",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Menu"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/MenuDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/display/{id}": {
+      "get": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Affiche le menu ayant l'id recherché",
+        "description": "",
+        "operationId": "getMenu",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id du menu à afficher",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Menu"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/MenuDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/display/allMenu": {
+      "get": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Affiche tous les menus",
+        "description": "",
+        "operationId": "getAllMenu",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": null,
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/MenuDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/displayMenuByPrice/{price}": {
+      "get": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Affiche les menus ayant le prix indiqué",
+        "description": "",
+        "operationId": "getMenuByPrice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "price",
+            "description": "Prix du menu à afficher",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Menu"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": null,
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/MenuDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/displayMenuBySize/{size}": {
+      "get": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Affiche les menus ayant la taille indiquée",
+        "description": "",
+        "operationId": "getMenuBySize",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "size",
+            "description": "Prix du menu à afficher",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Menu"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": null,
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/MenuDisplay"
+            }
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/modifyName/{oldname}/{newname}": {
+      "patch": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Modifier le nom d'un menu",
+        "description": "",
+        "operationId": "setMenuName",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "oldname",
+            "description": "Ancien nom du menu",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "newname",
+            "description": "Nouveau nom du menu",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/modifyPrice/{name}/{newprice}": {
+      "patch": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Modifier le prix d'un menu",
+        "description": "",
+        "operationId": "setMenuPrice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "newprice",
+            "description": "Nouveau prix du menu",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/modifySize/{id}/{size}": {
+      "patch": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Modifier la taille d'un menu",
+        "description": "",
+        "operationId": "setMenuSize",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id du menu à modifier",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "size",
+            "description": "Nouvelle taille du menu",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/menu/delete/{id}": {
+      "delete": {
+        "tags": [
+          "menu"
+        ],
+        "summary": "Supprime un menu",
+        "description": "",
+        "operationId": "deleteMenu",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "Token d'authentification",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id du menu à supprimer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Succès de l'opération"
+          },
+          "400": {
+            "description": "Paramètres invalides ou token invalide"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Ajouter un utilisateur",
+        "description": "",
+        "operationId": "user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Utilisateur ajouté à la base",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/user/signin": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Connexion d'un utilisateur",
+        "description": "",
+        "operationId": "user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Utilisateur connecté",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/UserSignin"
+            }
+          },
+          "400": {
+            "description": "Paramètres invalides"
+          },
+          "500": {
+            "description": "Erreur technique du serveur"
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deconnexion d'un utilisateur",
+        "description": "",
+        "operationId": "user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Utilisateur Deconnecté",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succès de l'opération",
+            "schema": {
+              "$ref": "#/definitions/UserSignin"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "cal": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Nombre de calories du produit"
+        },
+        "highlight": {
+          "type": "boolean",
+          "default": false
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "size": {
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "Menu": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "size": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "idprods": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "MenuDisplay": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "size": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "idprods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        }
+      }
+    },
+    "Command": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "idMenus": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "idProds": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "CommandDisplay": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "Menus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MenuDisplay"
+          }
+        },
+        "Products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        }
+      }
+    },
+    "Promotion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "idProduct": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idMenu": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "PromotionDisplay": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "idProduct": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        },
+        "idMenu": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Menu"
+          }
+        }
+      }
+    },
+    "UserSignin": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
