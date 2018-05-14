@@ -6,7 +6,7 @@ const UserController = controllers.UserController;
 const UserRouter = express.Router();
 UserRouter.use(bodyParser.json());
 
-UserRouter.put('/',function(req, res){
+UserRouter.post('/',function(req, res){
     const name= req.body.username;
     const email= req.body.email;
     const password= req.body.password;
@@ -19,11 +19,10 @@ UserRouter.put('/',function(req, res){
     UserController.register(name, email, password)
         .then((successfullyAdd) => {
         res.status(201).json(successfullyAdd);
-        res.end();
     })
     .catch((err) => {
         console.log(err);
-    res.status(500).end();
+        res.status(500).end();
     });
 });
 
@@ -40,7 +39,7 @@ UserRouter.post('/signin',function(req, res){
         if(succesfullLogin == -1){
             res.status(400).send({ auth: false, message: 'Wrong password and/or email' }).end();
         }else{
-            res.status(200).send({ auth: true, token: succesfullLogin }).end();
+            res.status(201).send({ auth: true, token: succesfullLogin }).end();
         }
 
     })
@@ -51,7 +50,7 @@ UserRouter.post('/signin',function(req, res){
 });
 
 UserRouter.get('/logout', function(req, res) {
-    res.status(200).send({ auth: false, token: null });
+    res.send({ auth: false, token: null });
 });
 
 

@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const ProductRouter = express.Router();
 ProductRouter.use(bodyParser.json());
 
-ProductRouter.put('/', function (req, res) {
+ProductRouter.post('/', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const name = req.body.name;
@@ -32,10 +32,9 @@ ProductRouter.put('/', function (req, res) {
     }else{
         res.status(400).send({ auth: false, message: 'Can not read token' }).end();
     }
-
 });
 
-ProductRouter.put('/modifyName/:oldName/:newName', function (req, res){
+ProductRouter.patch('/modifyName/:oldName/:newName', function (req, res){
     const log = UserController.isLogged(req);
     if(log){
         const oldName = req.params.oldName;
@@ -47,8 +46,8 @@ ProductRouter.put('/modifyName/:oldName/:newName', function (req, res){
         }
 
         ProductController.setProductName(oldName, newName)
-            .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
+            .then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch((err) => {
@@ -61,7 +60,7 @@ ProductRouter.put('/modifyName/:oldName/:newName', function (req, res){
 
 });
 
-ProductRouter.put('/modifyCal/:name/:cal', function (req, res){
+ProductRouter.patch('/modifyCal/:name/:cal', function (req, res){
     const log = UserController.isLogged(req);
     if(log){
         const name = req.params.name;
@@ -73,8 +72,8 @@ ProductRouter.put('/modifyCal/:name/:cal', function (req, res){
         }
 
         ProductController.setProductCal(name, cal)
-            .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
+            .then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch((err) => {
@@ -87,7 +86,7 @@ ProductRouter.put('/modifyCal/:name/:cal', function (req, res){
 
 });
 
-ProductRouter.put('/modifySize/:id/:size', function (req, res){
+ProductRouter.patch('/modifySize/:id/:size', function (req, res){
     const log = UserController.isLogged(req);
     if(log){
         const id = req.params.id;
@@ -99,8 +98,8 @@ ProductRouter.put('/modifySize/:id/:size', function (req, res){
         }
 
         ProductController.setProductSize(id, size)
-            .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
+            .then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch((err) => {
@@ -112,7 +111,7 @@ ProductRouter.put('/modifySize/:id/:size', function (req, res){
     }
 });
 
-ProductRouter.put('/modifyPrice/:name/:price', function (req, res) {
+ProductRouter.patch('/modifyPrice/:name/:price', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const name = req.params.name;
@@ -124,8 +123,8 @@ ProductRouter.put('/modifyPrice/:name/:price', function (req, res) {
         }
 
         ProductController.setProductPrice(name, price)
-            .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
+            .then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch ((err) => {
@@ -138,7 +137,7 @@ ProductRouter.put('/modifyPrice/:name/:price', function (req, res) {
 
 });
 
-ProductRouter.put('/modifyHighlight/:id', function (req, res) {
+ProductRouter.patch('/modifyHighlight/:id', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const id = req.params.id;
@@ -149,8 +148,8 @@ ProductRouter.put('/modifyHighlight/:id', function (req, res) {
         }
 
         ProductController.setProductHighLight(id)
-            .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
+            .then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch ((err) => {
@@ -162,7 +161,7 @@ ProductRouter.put('/modifyHighlight/:id', function (req, res) {
     }
 });
 
-ProductRouter.put('/resetHighlight/:id', function (req, res) {
+ProductRouter.patch('/resetHighlight/:id', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const id = req.params.id;
@@ -173,8 +172,8 @@ ProductRouter.put('/resetHighlight/:id', function (req, res) {
         }
 
         ProductController.resetProductHighLight(id)
-            .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
+            .then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch ((err) => {
@@ -197,9 +196,8 @@ ProductRouter.delete('/delete/:id', function (req, res) {
         }
 
         ProductController.deleteProduct(id)
-        .then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
-            res.end();
+        .then(() => {
+            res.status(204).end();
         })
         .catch ((err) => {
             console.log(err);
@@ -216,12 +214,16 @@ ProductRouter.get("/display/allProducts", function(req, res){
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
-ProductRouter.get('/:name', function (req, res) {
+ProductRouter.get('/displayByName/:name', function (req, res) {
     const name = req.params.name;
+
+    if( name === undefined ) {
+        res.status(400).end()
+    }
 
     ProductController.getProductByName(name)
     .then((product) => {
@@ -229,12 +231,16 @@ ProductRouter.get('/:name', function (req, res) {
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
-ProductRouter.get('/price/:price', function (req, res) {
+ProductRouter.get('/displayByPrice/:price', function (req, res) {
    const price = req.params.price;
+
+    if( price === undefined ) {
+        res.status(400).end()
+    }
 
    ProductController.getProductByPrice(price)
    .then((product) => {
@@ -242,12 +248,16 @@ ProductRouter.get('/price/:price', function (req, res) {
    })
    .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
    });
 });
 
-ProductRouter.get('/cal/:cal', function (req, res) {
+ProductRouter.get('/displayByCal/:cal', function (req, res) {
     const cal = req.params.cal;
+
+    if( cal === undefined ) {
+        res.status(400).end();
+    }
 
     ProductController.getProductByCal(cal)
     .then((product) => {
@@ -255,12 +265,16 @@ ProductRouter.get('/cal/:cal', function (req, res) {
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
-ProductRouter.get('/size/:size', function (req, res) {
+ProductRouter.get('/displayBySize/:size', function (req, res) {
     const size = req.params.size;
+
+    if( size === undefined ) {
+        res.status(400).end();
+    }
 
     ProductController.getProductBySize(size)
     .then((product) => {
@@ -268,18 +282,18 @@ ProductRouter.get('/size/:size', function (req, res) {
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
-ProductRouter.get('/display/highlight', function(req, res){
+ProductRouter.get('/displayHighlight', function(req, res){
    ProductController.getProductByHighlight()
    .then((product) => {
-       res.json(product)
+       res.json(product);
    })
     .catch((err) => {
         console.log(err);
-       res.status(501).end();
+       res.status(500).end();
     });
 });
 

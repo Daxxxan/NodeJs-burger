@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const PromotionRouter = express.Router();
 PromotionRouter.use(bodyParser.json());
 
-PromotionRouter.put('/addProductPromotion', function(req, res) {
+PromotionRouter.post('/addProductPromotion', function(req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const price = req.body.price;
@@ -22,7 +22,6 @@ PromotionRouter.put('/addProductPromotion', function(req, res) {
         PromotionController.setProductPromotion(price, startDate, endDate, productId)
             .then((successfullyAdd) => {
             res.status(201).json(successfullyAdd);
-        res.end();
         })
         .catch((err) => {
                 console.log(err);
@@ -31,10 +30,9 @@ PromotionRouter.put('/addProductPromotion', function(req, res) {
     }else{
         res.status(400).send({ auth: false, message: 'Can not read token' }).end();
     }
-
 });
 
-PromotionRouter.put('/addMenuPromotion', function(req, res) {
+PromotionRouter.post('/addMenuPromotion', function(req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const price = req.body.price;
@@ -49,7 +47,6 @@ PromotionRouter.put('/addMenuPromotion', function(req, res) {
         PromotionController.setMenuPromotion(price, startDate, endDate, menuId)
             .then((successfullyAdd) => {
             res.status(201).json(successfullyAdd);
-        res.end();
         })
         .catch((err) => {
                 console.log(err);
@@ -64,12 +61,11 @@ PromotionRouter.put('/addMenuPromotion', function(req, res) {
 PromotionRouter.get('/displayAll', function(req, res){
     PromotionController.getPromotion()
     .then((Promotion) => {
-        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
@@ -78,12 +74,11 @@ PromotionRouter.get('/displayPromotionByProduct/:id', function(req, res) {
 
     PromotionController.getPromotionByProduct(id)
     .then((Promotion) => {
-        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
@@ -92,56 +87,52 @@ PromotionRouter.get('/displayPromotionByMenu/:id', function(req, res) {
 
     PromotionController.getPromotionByMenu(id)
     .then((Promotion) => {
-        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
 PromotionRouter.get('/displayPromotionByStartDate/:startDate', function(req, res) {
-    var date = req.params.startDate;
+    let date = req.params.startDate;
     date = new Date(date);
 
     PromotionController.getPromotionByStartDate(date)
     .then((Promotion) => {
-        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
 PromotionRouter.get('/displayPromotionByEndDate/:endDate', function(req, res) {
-    var date = req.params.endDate;
+    let date = req.params.endDate;
 
     PromotionController.getPromotionByEndDate(date)
     .then((Promotion) => {
-        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
-PromotionRouter.put('/modifyPromotionPrice/:id/:price', function(req, res) {
+PromotionRouter.patch('/modifyPromotionPrice/:id/:price', function(req, res) {
     const id = req.params.id;
     const price = req.params.price;
 
     PromotionController.setPromotionPrice(id, price)
-    .then((Promotion) => {
-        res.status(200);
-        res.json(Promotion);
+    .then(() => {
+        res.status(204).end();
     })
     .catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
@@ -154,9 +145,8 @@ PromotionRouter.delete("/delete/:id",function(req, res){
             return;
         }
 
-        PromotionController.deletePromotion(id).then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
-            res.end();
+        PromotionController.deletePromotion(id).then(() => {
+            res.status(204).end();
         })
         .catch((err) => {
                 console.log(err);

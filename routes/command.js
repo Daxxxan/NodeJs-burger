@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const CommandRouter = express.Router();
 CommandRouter.use(bodyParser.json());
 
-CommandRouter.put('/', function (req, res) {
+CommandRouter.post('/', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const status = req.body.status;
@@ -34,7 +34,7 @@ CommandRouter.put('/', function (req, res) {
 
 });
 
-CommandRouter.put('/modifyStatus/:id/:status', function (req, res) {
+CommandRouter.patch('/modifyStatus/:id/:status', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const id = req.params.id;
@@ -45,8 +45,8 @@ CommandRouter.put('/modifyStatus/:id/:status', function (req, res) {
             return;
         }
 
-        CommandController.setStatus(id, status).then((succesFullyAdd) => {
-            res.status(201).json(succesFullyAdd);
+        CommandController.setStatus(id, status).then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch((err) => {
@@ -59,7 +59,7 @@ CommandRouter.put('/modifyStatus/:id/:status', function (req, res) {
 
 });
 
-CommandRouter.put('/modifyPrice/:id/:price', function (req, res) {
+CommandRouter.patch('/modifyPrice/:id/:price', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const id = req.params.id;
@@ -70,8 +70,8 @@ CommandRouter.put('/modifyPrice/:id/:price', function (req, res) {
             return;
         }
 
-        CommandController.setPrice(id, price).then((succesFullyAdd) => {
-            res.status(201).json(succesFullyAdd);
+        CommandController.setPrice(id, price).then(() => {
+            res.status(204).end();
         res.end();
         })
         .catch((err) => {
@@ -87,22 +87,20 @@ CommandRouter.put('/modifyPrice/:id/:price', function (req, res) {
 CommandRouter.get('/displayAll', function (req, res) {
    CommandController.getAllCommand().then((display) => {
         res.json(display);
-        res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
 CommandRouter.get('/displayCommand/:id', function (req, res) {
-    id = req.params.id;
+    const id = req.params.id;
 
     CommandController.getCommand(id).then((display) => {
         res.json(display);
-        res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
@@ -114,7 +112,7 @@ CommandRouter.get('/displayCommandByStatus/:status', function(req, res){
         res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     });
 });
 
@@ -126,7 +124,7 @@ CommandRouter.get("/displayCommandByProductName/:productName", function(req, res
       res.end();
     }).catch((err) => {
         console.log(err);
-        res.status(501).end();
+        res.status(500).end();
     })
 });
 
@@ -139,9 +137,8 @@ CommandRouter.delete("/delete/:id",function(req, res){
             return;
         }
 
-        CommandController.deleteCommand(id).then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
-        res.end();
+        CommandController.deleteCommand(id).then(() => {
+            res.status(204).end();
     })
     .catch((err) => {
             console.log(err);

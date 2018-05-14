@@ -7,7 +7,7 @@ const UserController = controllers.UserController;
 const MenuRouter = express.Router();
 MenuRouter.use(bodyParser.json());
 
-MenuRouter.put('/', function (req, res) {
+MenuRouter.post('/', function (req, res) {
     const log = UserController.isLogged(req);
     if(log){
         const name = req.body.name;
@@ -40,7 +40,7 @@ MenuRouter.get('/:name', function (req, res) {
 
     MenuController.getMenuByName(name)
     .then((menu) => {
-        res.status(200).json(menu);
+        res.json(menu);
     })
     .catch((err) => {
         console.log(err);
@@ -50,51 +50,47 @@ MenuRouter.get('/:name', function (req, res) {
 
 MenuRouter.get("/display/allMenu", function(req, res){
     MenuController.getAllMenu().then((display) => {
-        res.status(200).json(display);
-        res.end();
+        res.json(display);
     }).catch((err) => {
         console.log(err);
         res.status(500).end();
     });
-})
+});
 
 MenuRouter.get("/displayMenu/:id", function(req, res){
     const id = req.params.id;
 
     MenuController.getMenu(id).then((display) => {
-        res.status(200).json(display);
-        res.end();
+        res.json(display);
     }).catch((err) => {
         console.log(err);
         res.status(500).end();
     });
-})
+});
 
 MenuRouter.get("/displayMenuByPrice/:price", function(req, res){
     const price = req.params.price;
 
     MenuController.getMenuByPrice(price).then((display) => {
-        res.status(200).json(display);
-        res.end();
+        res.json(display);
     }).catch((err) => {
         console.log(err);
         res.status(500).end();
     });
-})
+});
 
 MenuRouter.get("/displayMenuBySize/:size", function(req, res){
     const size = req.params.size;
 
     MenuController.getMenuBySize(size).then((display) => {
-        res.status(200).json(display);
-        res.end();
+        res.json(display);
     }).catch((err) => {
         console.log(err);
         res.status(500).end();
     });
-})
+});
 
-MenuRouter.put('/modifyName/:oldname/:newname', function(req, res){
+MenuRouter.patch('/modifyName/:oldname/:newname', function(req, res){
     const log = UserController.isLogged(req);
     if(log){
         const oldname = req.params.oldname;
@@ -105,12 +101,11 @@ MenuRouter.put('/modifyName/:oldname/:newname', function(req, res){
             return;
         }
 
-        MenuController.setName(oldname,newname).then((succesFullyAdd) => {
-            res.status(201).json(succesFullyAdd);
-        res.end();
+        MenuController.setName(oldname,newname).then(() => {
+            res.status(204).end();
         })
         .catch((err) => {
-                console.log(err);
+            console.log(err);
             res.status(500).end();
         });
     }else{
@@ -119,7 +114,7 @@ MenuRouter.put('/modifyName/:oldname/:newname', function(req, res){
 
 });
 
-MenuRouter.put('/modifyPrice/:name/:newprice', function(req, res){
+MenuRouter.patch('/modifyPrice/:name/:newprice', function(req, res){
     const log = UserController.isLogged(req);
     if(log){
         const name = req.params.name;
@@ -130,12 +125,11 @@ MenuRouter.put('/modifyPrice/:name/:newprice', function(req, res){
             return;
         }
 
-        MenuController.setPrice(name,newPrice).then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
-        res.end();
+        MenuController.setPrice(name,newPrice).then(() => {
+            res.status(204).end();
         })
         .catch((err) => {
-                console.log(err);
+            console.log(err);
             res.status(500).end();
         });
     }else{
@@ -144,7 +138,7 @@ MenuRouter.put('/modifyPrice/:name/:newprice', function(req, res){
 
 });
 
-MenuRouter.put('/modifySize/:id/:size', function(req, res){
+MenuRouter.patch('/modifySize/:id/:size', function(req, res){
     const log = UserController.isLogged(req);
     if(log){
         const id = req.params.id;
@@ -155,9 +149,8 @@ MenuRouter.put('/modifySize/:id/:size', function(req, res){
             return;
         }
 
-        MenuController.setSize(id, size).then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
-        res.end();
+        MenuController.setSize(id, size).then(() => {
+            res.status(204).end();
         })
         .catch((err) => {
                 console.log(err);
@@ -178,12 +171,11 @@ MenuRouter.delete("/delete/:id",function(req, res){
             return;
         }
 
-        MenuController.deleteMenu(id).then((successFullyAdd) => {
-            res.status(204).json(successFullyAdd);
-            res.end();
+        MenuController.deleteMenu(id).then(() => {
+            res.status(204).end();
         })
         .catch((err) => {
-                console.log(err);
+            console.log(err);
             res.status(500).end();
         });
     }else{
