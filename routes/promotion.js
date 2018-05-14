@@ -34,28 +34,6 @@ PromotionRouter.put('/addProductPromotion', function(req, res) {
 
 });
 
-PromotionRouter.delete("/delete/:id",function(req, res){
-    const log = UserController.isLogged(req);
-    if(log){
-        const id = req.params.id;
-        if(id === null){
-            res.status(400).end();
-            return;
-        }
-
-        PromotionController.deletePromotion(id).then((successFullyAdd) => {
-            res.status(201).json(successFullyAdd);
-            res.end();
-        })
-        .catch((err) => {
-                console.log(err);
-            res.status(500).end();
-        });
-    }else{
-        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
-    }
-});
-
 PromotionRouter.put('/addMenuPromotion', function(req, res) {
     const log = UserController.isLogged(req);
     if(log){
@@ -86,6 +64,7 @@ PromotionRouter.put('/addMenuPromotion', function(req, res) {
 PromotionRouter.get('/displayAll', function(req, res){
     PromotionController.getPromotion()
     .then((Promotion) => {
+        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
@@ -99,6 +78,7 @@ PromotionRouter.get('/displayPromotionByProduct/:id', function(req, res) {
 
     PromotionController.getPromotionByProduct(id)
     .then((Promotion) => {
+        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
@@ -112,6 +92,7 @@ PromotionRouter.get('/displayPromotionByMenu/:id', function(req, res) {
 
     PromotionController.getPromotionByMenu(id)
     .then((Promotion) => {
+        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
@@ -126,6 +107,7 @@ PromotionRouter.get('/displayPromotionByStartDate/:startDate', function(req, res
 
     PromotionController.getPromotionByStartDate(date)
     .then((Promotion) => {
+        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
@@ -139,6 +121,7 @@ PromotionRouter.get('/displayPromotionByEndDate/:endDate', function(req, res) {
 
     PromotionController.getPromotionByEndDate(date)
     .then((Promotion) => {
+        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
@@ -147,18 +130,41 @@ PromotionRouter.get('/displayPromotionByEndDate/:endDate', function(req, res) {
     });
 });
 
-PromotionRouter.get('/modifyPromotionPrice/:id/:price', function(req, res) {
+PromotionRouter.put('/modifyPromotionPrice/:id/:price', function(req, res) {
     const id = req.params.id;
     const price = req.params.price;
 
     PromotionController.setPromotionPrice(id, price)
     .then((Promotion) => {
+        res.status(200);
         res.json(Promotion);
     })
     .catch((err) => {
         console.log(err);
         res.status(501).end();
     });
+});
+
+PromotionRouter.delete("/delete/:id",function(req, res){
+    const log = UserController.isLogged(req);
+    if(log){
+        const id = req.params.id;
+        if(id === null){
+            res.status(400).end();
+            return;
+        }
+
+        PromotionController.deletePromotion(id).then((successFullyAdd) => {
+            res.status(201).json(successFullyAdd);
+            res.end();
+        })
+        .catch((err) => {
+                console.log(err);
+            res.status(500).end();
+        });
+    }else{
+        res.status(400).send({ auth: false, message: 'Can not read token' }).end();
+    }
 });
 
 module.exports = PromotionRouter;
